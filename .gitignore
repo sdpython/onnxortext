@@ -1,0 +1,37 @@
+# build, distribute, and bins (+ python proto bindings)
+mybuild.*
+build
+build_host_protoc
+build_android
+build_ios
+build_*
+.build_debug/*
+.build_release/*
+distribute/*
+dist/
+*.testbin
+*.bin
+cmake_build
+.cmake_build
+cmake-build-debug
+gen
+.DS_Store
+*~
+.vs
+Testing/
+TestResults/
+.idea/
+nuget_root/
+.packages/
+.vscode/
+*.code-workspace
+__pycache__
+out/
+*.egg-info/
+.setuptools-cmake-build/
+onnxruntime-*-*-*/
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.pyd
