@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "utils/string_utils.h"
-#include "string_common.h"
+#include "utils/string_common.h"
 
 template <typename T1, typename T2, typename T3>
 class BroadcastIteratorRight {

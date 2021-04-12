@@ -4,17 +4,6 @@
 #include "onnxruntime_cxx_api.h"
 #undef ORT_API_MANUAL_INIT
 
-#if defined(PYTHON_OP_SUPPORT)
-const OrtCustomOp* FetchPyCustomOps(size_t& count);
-bool EnablePyCustomOps(bool enable = true);
-#endif
-
-// A helper API to support test kernels.
-// Must be invoked before RegisterCustomOps.
-extern "C" bool AddExternalCustomOp(const OrtCustomOp* c_op);
-
-const char c_OpDomain[] = "ai.onnx.contrib";
-
 struct BaseKernel {
   BaseKernel(OrtApi api) : api_(api), info_(nullptr), ort_(api_) {}
   BaseKernel(OrtApi api, const OrtKernelInfo* info) : api_(api), info_(info), ort_(api_) {}

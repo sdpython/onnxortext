@@ -1,6 +1,9 @@
 #pragma once
 
+#include <string>
+#include <vector>
 #include <math.h>
+#include "onnxortext.h"
 
 const char* GetLibraryPath();
 

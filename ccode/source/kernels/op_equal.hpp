@@ -1,7 +1,7 @@
 #pragma once
 
-#include "kernels.h"
 #include "utils/string_utils.h"
+#include "onnxortext.h"
 
 struct KernelStringEqual : BaseKernel {
   KernelStringEqual(OrtApi api);

@@ -21,13 +21,18 @@ requirements = None
 
 KEYWORDS = project_var_name + ', ONNX, onnxruntime'
 DESCRIPTION = """Experimental runtime of ONNX operator based on onnxruntime."""
-
+CLASSIFIERS = [
+    'Programming Language :: Python :: %d' % sys.version_info[0],
+    'Intended Audience :: Developers',
+    'Topic :: Scientific/Engineering',
+    'Topic :: Education',
+    'License :: OSI Approved :: MIT License',
+    'Development Status :: 5 - Production/Stable'
+]
 
 packages = find_packages()
 package_dir = {k: os.path.join('.', k.replace(".", "/")) for k in packages}
-package_data = {
-    "onnxortext": ["*.dll", "*.so", "*.pyd"],
-}
+package_data = {"onnxortext": ["*.dll", "*.so"]}
 
 
 TOP_DIR = os.path.dirname(__file__)
@@ -68,10 +73,13 @@ class BuildCMakeExt(_build_ext):
         Performs build_cmake before doing the 'normal' stuff
         """
         for extension in self.extensions:
-            if extension.name == 'onnxruntime_customops._ortcustomops':
+            if extension.name == 'onnxortext._onnxortext':
                 self.build_cmake(extension)
 
     def build_cmake(self, extension):
+        import onnxruntime
+        ortpath = os.path.abspath(os.path.dirname(onnxruntime.__file__))
+        ortpath = os.path.normpath(os.path.join(ortpath, ".."))
         project_dir = pathlib.Path().absolute()
         build_temp = pathlib.Path(self.build_temp)
         build_temp.mkdir(parents=True, exist_ok=True)
@@ -79,11 +87,13 @@ class BuildCMakeExt(_build_ext):
 
         config = 'RelWithDebInfo' if self.debug else 'Release'
         cmake_args = [
-            '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + str(ext_fullpath.parent.absolute()),
-            '-DEXTENTION_NAME=' + pathlib.Path(
-                self.get_ext_filename(extension.name)).name,
-            '-DCMAKE_BUILD_TYPE=' + config
+            '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=%s' % str(ext_fullpath.parent.absolute()),
+            '-DONNXRUNTIME_LIB_DIR=%s' % ortpath,
+            # '-DEXTENSION_NAME=%s' % pathlib.Path(
+            #     self.get_ext_filename(extension.name)).name,
+            '-DCMAKE_BUILD_TYPE=%s' % config
         ]
+
         # Uses to overwrite 
         # export Python3_INCLUDE_DIRS=/opt/python/cp38-cp38
         # export Python3_LIBRARIES=/opt/python/cp38-cp38
@@ -105,7 +115,7 @@ class BuildCMakeExt(_build_ext):
                 self.spawn(['cmake', '--build', '.'] + build_args)
 
         if sys.platform == "win32":
-            self.copy_file(build_temp / config / 'ortcustomops.dll',
+            self.copy_file(build_temp / config / 'onnxortext.dll',
                            self.get_ext_filename(extension.name))
 
 
@@ -136,7 +146,7 @@ cmd_class.update(dict(
 
 setup(
     name='onnxortext',
-    version=read_version(),
+    version=read_version(__file__, project_var_name),
     packages=packages,
     package_dir=package_dir,
     package_data=package_data,
