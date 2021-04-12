@@ -4,6 +4,7 @@
 """
 import os
 
+
 def _find_():
     _this_ = os.path.abspath(os.path.dirname(__file__))
     for k in os.listdir(_this_):
@@ -12,8 +13,8 @@ def _find_():
             return os.path.join(_this_, k)
     raise FileNotFoundError(
         "Unable to find any library in %r." % _this_)
-    
-    
+
+
 _name_ = _find_()
 
 
@@ -23,4 +24,3 @@ def get_library_path():
     :return: A string of the this library path.
     """
     return _name_
-    

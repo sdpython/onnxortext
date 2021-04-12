@@ -78,7 +78,7 @@ class TestPythonOpString(ExtTestCase):
                 b = (numpy.random.rand(*shape2) * 10).astype(
                     numpy.int32).astype(numpy.str)
                 yield a, b
-                for k in range(j+1, i):
+                for k in range(j + 1, i):
                     shape3 = list(shape2)
                     shape3[k] = 1
                     b = (numpy.random.rand(*shape3) * 10).astype(
@@ -118,7 +118,8 @@ class TestPythonOpString(ExtTestCase):
                 if skip_empty:
                     exp_indices = numpy.array(
                         [[0, 0], [0, 1], [2, 0], [2, 1], [2, 2], [3, 0]])
-                    exp_text = numpy.array(['a', 'b', 'aa', 'b', 'c', 'dddddd'])
+                    exp_text = numpy.array(
+                        ['a', 'b', 'aa', 'b', 'c', 'dddddd'])
                 else:
                     exp_indices = numpy.array(
                         [[0, 0], [0, 1], [0, 2], [2, 0], [2, 1],

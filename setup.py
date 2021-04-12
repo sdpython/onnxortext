@@ -87,14 +87,15 @@ class BuildCMakeExt(_build_ext):
 
         config = 'RelWithDebInfo' if self.debug else 'Release'
         cmake_args = [
-            '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=%s' % str(ext_fullpath.parent.absolute()),
+            '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=%s' % str(
+                ext_fullpath.parent.absolute()),
             '-DONNXRUNTIME_LIB_DIR=%s' % ortpath,
             # '-DEXTENSION_NAME=%s' % pathlib.Path(
             #     self.get_ext_filename(extension.name)).name,
             '-DCMAKE_BUILD_TYPE=%s' % config
         ]
 
-        # Uses to overwrite 
+        # Uses to overwrite
         # export Python3_INCLUDE_DIRS=/opt/python/cp38-cp38
         # export Python3_LIBRARIES=/opt/python/cp38-cp38
         for env in ['Python3_INCLUDE_DIRS', 'Python3_LIBRARIES']:
@@ -157,12 +158,13 @@ setup(
     license="MIT",
     author='Xavier Dupré',
     author_email='xavier.dupre@gmail.com',
+    download_url='https://github.com/sdpython/onnxortext',
     url='http://www.xavierdupre.fr/app/onnxortext/helpsphinx/index.html',
     ext_modules=ext_modules,
     long_description=read_readme(__file__),
     keywords=KEYWORDS,
     cmdclass=cmd_class,
-    classifiers=CLASSIFIERS,    
+    classifiers=CLASSIFIERS,
     include_package_data=True,
     setup_requires=['pyquicksetup'],
     install_requires=['numpy', 'onnx', 'onnxruntime'],
