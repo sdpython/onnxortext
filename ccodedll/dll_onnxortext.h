@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-	void ORT_API_CALL InitLib();
 	OrtStatus* ORT_API_CALL RegisterCustomOps(OrtSessionOptions* options, const OrtApiBase* api);
 	bool ORT_API_CALL AddExternalCustomOp(const OrtCustomOp* c_op);
 
