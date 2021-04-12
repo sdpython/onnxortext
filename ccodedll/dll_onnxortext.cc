@@ -9,8 +9,6 @@
 
 const char c_OpDomain[] = "ai.onnx.ext";
 
-
-
 CustomOpStringEqual c_CustomOpStringEqual;
 CustomOpStringSplit c_CustomOpStringSplit;
 
@@ -56,7 +54,7 @@ extern "C" bool AddExternalCustomOp(const OrtCustomOp * c_op) {
 extern "C" OrtStatus * ORT_API_CALL RegisterCustomOps(OrtSessionOptions * options, const OrtApiBase * api) {
     OrtCustomOpDomain* domain = nullptr;
     const OrtApi* ortApi = api->GetApi(ORT_API_VERSION);
-    std::set<std::string> pyop_nameset;
+    std::set<std::string> op_nameset;
 
     if (auto status = ortApi->CreateCustomOpDomain(c_OpDomain, &domain)) {
         return status;
@@ -64,7 +62,7 @@ extern "C" OrtStatus * ORT_API_CALL RegisterCustomOps(OrtSessionOptions * option
 
     OrtCustomOp** ops = operator_lists;
     while (*ops != nullptr) {
-        if (pyop_nameset.find((*ops)->GetName(*ops)) == pyop_nameset.end()) {
+        if (op_nameset.find((*ops)->GetName(*ops)) == op_nameset.end()) {
             if (auto status = ortApi->CustomOpDomain_Add(domain, *ops)) {
                 return status;
             }

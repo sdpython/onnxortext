@@ -5,8 +5,6 @@
 #include "common_test_ortops.h"
 
 TEST(ops, test_string_split) {
-	auto ort_env = std::make_unique<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "Default");
-
 	std::vector<TestValue> inputs(1);
 	inputs[0].name = "input_1";
 	inputs[0].element_type = ONNXTensorElementDataType::ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING;
@@ -24,5 +22,5 @@ TEST(ops, test_string_split) {
 	model_path /= "..";
 	model_path /= "data";
 	model_path /= "custom_op_string_split.onnx";
-	TestInference(*ort_env, model_path.c_str(), inputs, outputs, GetLibraryPath());
+	TestInference(model_path.c_str(), inputs, outputs, GetLibraryPath());
 }

@@ -212,10 +212,13 @@ void RunSession(Ort::Session& session_object,
 	}
 }
 
-void TestInference(Ort::Env& env, const ORTCHAR_T* model_uri,
+void TestInference(const ORTCHAR_T* model_uri,
 	const std::vector<TestValue>& inputs,
 	const std::vector<TestValue>& outputs,
 	const char* custom_op_library_filename) {
+	Ort::InitApi();
+	auto ort_env = std::make_unique<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "Default");
+
 	Ort::SessionOptions session_options;
 	void* handle = nullptr;
 	if (custom_op_library_filename) {
@@ -224,7 +227,7 @@ void TestInference(Ort::Env& env, const ORTCHAR_T* model_uri,
 	}
 
 	// if session creation passes, model loads fine
-	Ort::Session session(env, model_uri, session_options);
+	Ort::Session session(*ort_env, model_uri, session_options);
 
 	// Now run
 	RunSession(session, inputs, outputs);

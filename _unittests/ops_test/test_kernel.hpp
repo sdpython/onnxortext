@@ -20,7 +20,7 @@ void RunSession(Ort::Session& session_object,
                 const std::vector<TestValue>& inputs,
                 const std::vector<TestValue>& outputs);
 
-void TestInference(Ort::Env& env, const ORTCHAR_T* model_uri,
+void TestInference(const ORTCHAR_T* model_uri,
                    const std::vector<TestValue>& inputs,
                    const std::vector<TestValue>& outputs,
                    const char* custom_op_library_filename);

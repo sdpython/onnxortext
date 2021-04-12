@@ -10,7 +10,8 @@ static CustomOpOne op_1st;
 static CustomOpTwo op_2nd;
 
 TEST(ops, test_ort_case) {
-	auto ort_env = std::make_unique<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "Default");
+	AddExternalCustomOp(&op_1st);
+	AddExternalCustomOp(&op_2nd);
 
 	std::vector<TestValue> inputs(2);
 	inputs[0].name = "input_1";
@@ -40,9 +41,7 @@ TEST(ops, test_ort_case) {
 	model_path /= "data";
 	model_path /= "custom_op_test.onnx";
 
-	AddExternalCustomOp(&op_1st);
-	AddExternalCustomOp(&op_2nd);
-	TestInference(*ort_env, model_path.c_str(), inputs, outputs, GetLibraryPath());
+	TestInference(model_path.c_str(), inputs, outputs, GetLibraryPath());
 }
 
 TEST(ustring, tensor_operator) {

@@ -116,7 +116,10 @@ class BuildCMakeExt(_build_ext):
 
         if sys.platform == "win32":
             self.copy_file(build_temp / config / 'onnxortext.dll',
-                           self.get_ext_filename(extension.name))
+                           os.path.dirname(self.get_ext_filename(extension.name)))
+        else:
+            self.copy_file(build_temp / config / 'onnxortext.so',
+                           os.path.dirname(self.get_ext_filename(extension.name)))
 
 
 class BuildPy(_build_py):
