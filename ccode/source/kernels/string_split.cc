@@ -10,7 +10,7 @@ void KernelStringSplit::Compute(OrtKernelContext* context) {
 	const OrtValue* input_X = ort_.KernelContext_GetInput(context, 0);
 	const OrtValue* input_sep = ort_.KernelContext_GetInput(context, 1);
 	const OrtValue* input_skip_empty = ort_.KernelContext_GetInput(context, 2);
-	const bool* skip_empty = ort_.GetTensorData<bool>(input_skip_empty);
+	const uint8_t* skip_empty = ort_.GetTensorData<uint8_t>(input_skip_empty);
 	std::vector<std::string> X, sep;
 	GetTensorMutableDataString(api_, ort_, context, input_X, X);
 	GetTensorMutableDataString(api_, ort_, context, input_sep, sep);
@@ -113,7 +113,7 @@ ONNXTensorElementDataType CustomOpStringSplit::GetInputType(size_t index) const 
 	case 1:
 		return ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING;
 	case 2:
-		return ONNX_TENSOR_ELEMENT_DATA_TYPE_BOOL;
+		return ONNX_TENSOR_ELEMENT_DATA_TYPE_UINT8;
 	default:
 		throw std::runtime_error(MakeString("Unexpected input index ", index));
 	}

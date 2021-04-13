@@ -8,34 +8,6 @@
 
 const char* GetLibraryPath();
 
-struct KernelOne : BaseKernel {
-	KernelOne(OrtApi api);
-	void Compute(OrtKernelContext* context);
-};
-
-struct CustomOpOne : Ort::CustomOpBase<CustomOpOne, KernelOne> {
-	void* CreateKernel(OrtApi api, const OrtKernelInfo* info) const;
-	const char* GetName() const;
-	size_t GetInputTypeCount() const;
-	ONNXTensorElementDataType GetInputType(size_t index) const;
-	size_t GetOutputTypeCount() const;
-	ONNXTensorElementDataType GetOutputType(size_t index) const;
-};
-
-struct KernelTwo : BaseKernel {
-	KernelTwo(OrtApi api);
-	void Compute(OrtKernelContext* context);
-};
-
-struct CustomOpTwo : Ort::CustomOpBase<CustomOpTwo, KernelTwo> {
-	void* CreateKernel(OrtApi api, const OrtKernelInfo* info) const;
-	const char* GetName() const;
-	size_t GetInputTypeCount() const;
-	ONNXTensorElementDataType GetInputType(size_t index) const;
-	size_t GetOutputTypeCount() const;
-	ONNXTensorElementDataType GetOutputType(size_t index) const;
-};
-
 template <typename T>
 void _emplace_back(Ort::MemoryInfo& memory_info, std::vector<Ort::Value>& ort_inputs, const std::vector<T>& values, const std::vector<int64_t>& dims) {
 	ort_inputs.emplace_back(Ort::Value::CreateTensor<T>(

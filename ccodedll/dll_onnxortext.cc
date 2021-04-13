@@ -2,6 +2,7 @@
 #include "utils/string_utils.h"
 #include "kernels/op_equal.hpp"
 #include "kernels/string_split.hpp"
+#include "kernels/debug_op.hpp"
 #include "dll_onnxortext.h"
 
 // A helper API to support test kernels.
@@ -12,64 +13,35 @@ const char c_OpDomain[] = "ai.onnx.ext";
 CustomOpStringEqual c_CustomOpStringEqual;
 CustomOpStringSplit c_CustomOpStringSplit;
 
+CustomOpOne op_1st;
+CustomOpTwo op_2nd;
+
 OrtCustomOp* operator_lists[] = {
-    &c_CustomOpStringEqual,
-    &c_CustomOpStringSplit,
-    nullptr };
-
-class ExternalCustomOps {
-public:
-    ExternalCustomOps() {
-    }
-
-    static ExternalCustomOps& instance() {
-        static ExternalCustomOps g_instance;
-        return g_instance;
-    }
-
-    void Add(const OrtCustomOp* c_op) {
-        op_array_.push_back(c_op);
-    }
-
-    const OrtCustomOp* GetNextOp(size_t& idx) {
-        if (idx >= op_array_.size()) {
-            return nullptr;
-        }
-
-        return op_array_[idx++];
-    }
-
-    ExternalCustomOps(ExternalCustomOps const&) = delete;
-    void operator=(ExternalCustomOps const&) = delete;
-
-private:
-    std::vector<const OrtCustomOp*> op_array_;
-};
-
-extern "C" bool AddExternalCustomOp(const OrtCustomOp * c_op) {
-    ExternalCustomOps::instance().Add(c_op);
-    return true;
-}
+	&op_1st,
+	&op_2nd,
+	&c_CustomOpStringEqual,
+	&c_CustomOpStringSplit,
+	nullptr };
 
 extern "C" OrtStatus * ORT_API_CALL RegisterCustomOps(OrtSessionOptions * options, const OrtApiBase * api) {
-    OrtCustomOpDomain* domain = nullptr;
-    const OrtApi* ortApi = api->GetApi(ORT_API_VERSION);
-    std::set<std::string> op_nameset;
+	OrtCustomOpDomain* domain = nullptr;
+	const OrtApi* ortApi = api->GetApi(ORT_API_VERSION);
+	std::set<std::string> op_nameset;
 
-    if (auto status = ortApi->CreateCustomOpDomain(c_OpDomain, &domain)) {
-        return status;
-    }
+	if (auto status = ortApi->CreateCustomOpDomain(c_OpDomain, &domain)) {
+		return status;
+	}
 
-    OrtCustomOp** ops = operator_lists;
-    while (*ops != nullptr) {
-        if (op_nameset.find((*ops)->GetName(*ops)) == op_nameset.end()) {
-            if (auto status = ortApi->CustomOpDomain_Add(domain, *ops)) {
-                return status;
-            }
-        }
-        ++ops;
-    }
+	OrtCustomOp** ops = operator_lists;
+	while (*ops != nullptr) {
+		if (op_nameset.find((*ops)->GetName(*ops)) == op_nameset.end()) {
+			if (auto status = ortApi->CustomOpDomain_Add(domain, *ops)) {
+				return status;
+			}
+		}
+		++ops;
+	}
 
-    return ortApi->AddCustomOpDomain(options, domain);
+	return ortApi->AddCustomOpDomain(options, domain);
 }
 

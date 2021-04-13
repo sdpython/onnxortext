@@ -154,7 +154,7 @@ setup(
     packages=packages,
     package_dir=package_dir,
     package_data=package_data,
-    description="Experimental runtime of ONNX operator based on onnxruntime",
+    description="Experimental runtime of ONNX operator based on onnxruntime.",
     license="MIT",
     author='Xavier Dupré',
     author_email='xavier.dupre@gmail.com',

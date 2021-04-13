@@ -12,6 +12,28 @@ from onnxortext import (
 from pyquickhelper.pycode import ExtTestCase
 
 
+def _create_test_model_test(domain=DOMAIN):
+    nodes = []
+    nodes.append(helper.make_node(
+        'CustomOpOne', ['input_1', 'input_2'], ['output_1'],
+        domain=domain))
+    nodes.append(helper.make_node(
+        'CustomOpTwo', ['output_1'], ['output'],
+        domain=domain))
+
+    input0 = helper.make_tensor_value_info(
+        'input_1', onnx_proto.TensorProto.FLOAT, [3, 5])
+    input1 = helper.make_tensor_value_info(
+        'input_2', onnx_proto.TensorProto.FLOAT, [3, 5])
+    output0 = helper.make_tensor_value_info(
+        'output', onnx_proto.TensorProto.INT32, [3, 5])
+
+    graph = helper.make_graph(nodes, 'test0', [input0, input1], [output0])
+    model = helper.make_model(
+        graph, opset_imports=[helper.make_operatorsetid(domain, 1)])
+    return model
+
+
 def _create_test_model_string_equal(domain=DOMAIN):
     assert domain
     nodes = []
@@ -49,7 +71,7 @@ def _create_test_model_string_split(domain=DOMAIN):
     input1 = helper.make_tensor_value_info(
         'delimiter', onnx_proto.TensorProto.STRING, [])
     input2 = helper.make_tensor_value_info(
-        'skip_empty', onnx_proto.TensorProto.BOOL, [])
+        'skip_empty', onnx_proto.TensorProto.UINT8, [])
     output0 = helper.make_tensor_value_info(
         'indices', onnx_proto.TensorProto.INT64, [])
     output1 = helper.make_tensor_value_info(
@@ -85,6 +107,12 @@ class TestPythonOpString(ExtTestCase):
                         numpy.int32).astype(numpy.str)
                     yield a, b
 
+    def test_ut_cpp(self):
+        model_onnx = _create_test_model_test()
+        self.assertIn(DOMAIN, str(model_onnx))
+        with open("t.onnx", "wb") as f:
+            f.write(model_onnx.SerializeToString())
+
     def test_string_equal_cc(self):
         so = _ort.SessionOptions()
         so.register_custom_ops_library(_get_library_path())
@@ -109,7 +137,7 @@ class TestPythonOpString(ExtTestCase):
 
         for skip in [True, False]:
             with self.subTest(skip=skip):
-                skip_empty = numpy.array([skip])
+                skip_empty = numpy.array([skip], dtype=numpy.uint8)
 
                 txout = sess.run(
                     None, {'input': input, 'delimiter': delimiter,
@@ -142,7 +170,7 @@ class TestPythonOpString(ExtTestCase):
 
         for skip in [True, False]:
             with self.subTest(skip=skip):
-                skip_empty = numpy.array([skip])
+                skip_empty = numpy.array([skip], dtype=numpy.uint8)
 
                 txout = sess.run(
                     None, {'input': input, 'delimiter': delimiter,
@@ -179,7 +207,7 @@ class TestPythonOpString(ExtTestCase):
 
         for skip in [True, False]:
             with self.subTest(skip=skip):
-                skip_empty = numpy.array([skip])
+                skip_empty = numpy.array([skip], dtype=numpy.uint8)
 
                 txout = sess.run(
                     None, {'input': input, 'delimiter': delimiter,

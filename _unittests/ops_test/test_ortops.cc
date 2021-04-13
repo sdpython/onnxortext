@@ -6,13 +6,7 @@
 #include "dll_onnxortext.h"
 #include "common_test_ortops.h"
 
-static CustomOpOne op_1st;
-static CustomOpTwo op_2nd;
-
 TEST(ops, test_ort_case) {
-	AddExternalCustomOp(&op_1st);
-	AddExternalCustomOp(&op_2nd);
-
 	std::vector<TestValue> inputs(2);
 	inputs[0].name = "input_1";
 	inputs[0].element_type = ONNXTensorElementDataType::ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT;
