@@ -26,11 +26,11 @@ install:
   #- dir dist
   #- python setup.py install
   #- cd ..
-  # onnxruntime
-  - "%PYTHON%\\Scripts\\pip install -i https://test.pypi.org/simple/ ort-nightly"
   # other dependencies
   - "%PYTHON%\\Scripts\\pip install -r requirements.txt --no-deps"
   - "%PYTHON%\\Scripts\\pip install -r requirements-dev.txt --no-deps"
+  # onnxruntime
+  # - "%PYTHON%\\Scripts\\pip install -i https://test.pypi.org/simple/ ort-nightly"
 
 build: off
 

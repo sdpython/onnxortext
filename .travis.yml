@@ -29,7 +29,7 @@ before_install:
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-dev.txt
-  - pip install -i https://test.pypi.org/simple/ ort-nightly
+  # - pip install -i https://test.pypi.org/simple/ ort-nightly
   # - pip install onnxruntime
 
 before_script:
