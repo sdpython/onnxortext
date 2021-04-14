@@ -11,7 +11,8 @@ init:
 
 install:
   - "%PYTHON%\\python -m pip install --upgrade pip"
-  - pip install wheel pymyinstall
+  - "%PYTHON%\\python -m pip install wheel"
+  - "%PYTHON%\\python -m pip install pymyinstall"
   # for many packages
   # install precompiled versions not available on pypi
   - "%PYTHON%\\Scripts\\pymy_install3 llvmlite numba"
