@@ -5,7 +5,7 @@ onnxortext: experimental operators for onnxruntime
     :target: https://travis-ci.org/sdpython/onnxortext
     :alt: Build status
 
-.. image:: https://ci.appveyor.com/api/projects/status/jioxwx1igwbqwa28?svg=true
+.. image:: https://ci.appveyor.com/api/projects/status/r7st490hekggad3d?svg=true
     :target: https://ci.appveyor.com/project/sdpython/onnxortext
     :alt: Build Status Windows
 
