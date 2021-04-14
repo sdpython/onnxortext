@@ -1,0 +1,33 @@
+
+language: python
+
+python:
+  - { PATH: "{{Python39}}", VERSION: 3.9, DIST: std, PYINT: python3.9 }
+  
+virtualenv:
+  - path: {{ospathjoin(root_path, pickname("$NAME_JENKINS", project_name + "_$VERSION_$DIST_$NAME"), "_venv")}}
+  
+install:
+  - $PYINT -m pip install --upgrade pip
+  - $PYINT -m pip install --upgrade --no-cache-dir --no-deps --index http://localhost:8067/simple/ jyquickhelper pyquickhelper --extra-index-url=https://pypi.python.org/simple/
+  - $PYINT -m pip install --upgrade --no-cache-dir --no-deps --index http://localhost:8067/simple/ scikit-learn>=0.23 --extra-index-url=https://pypi.python.org/simple/
+  - $PYINT -m pip install --upgrade --no-cache-dir --no-deps --index http://localhost:8067/simple/ onnxruntime --upgrade --extra-index-url=https://pypi.python.org/simple/
+  - $PYINT -m pip install --upgrade --no-cache-dir --no-deps --index http://localhost:8067/simple/ onnx skl2onnx onnxconverter_common mlprodict --extra-index-url=https://pypi.python.org/simple/
+  - $PYINT -m pip install -r requirements.txt --upgrade
+  - $PYINT -m pip install -r requirements-dev.txt --upgrade
+  - $PYINT --version
+  - $PYINT -m pip freeze
+
+before_script:
+  - $PYINT -u setup.py build_ext --inplace
+
+script:
+  - { CMD: "$PYINT -u setup.py unittests", NAME: "UT", TIMEOUT: 7200 }
+
+after_script:
+  - if [ ${NAME} == "UT" ] then $PYINT -u setup.py bdist_wheel fi
+  - if [ ${NAME} == "UT" ] then cp dist/*.whl {{root_path}}/../local_pypi/local_pypi_server fi
+
+documentation:
+  - if [ ${NAME} == "UT" ] then $PYINT -u setup.py build_sphinx --layout=html fi
+  - if [ ${NAME} == "UT" ] then cp -R -f _doc/sphinxdoc/build/html dist/html fi
