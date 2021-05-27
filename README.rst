@@ -1,6 +1,6 @@
 
-.. image:: https://travis-ci.org/sdpython/onnxortext.svg?branch=master
-    :target: https://travis-ci.org/sdpython/onnxortext
+.. image:: https://travis-ci.com/sdpython/onnxortext.svg?branch=master
+    :target: https://travis-ci.com/sdpython/onnxortext
     :alt: Build status
 
 .. image:: https://ci.appveyor.com/api/projects/status/r7st490hekggad3d?svg=true

@@ -1,8 +1,8 @@
 onnxortext: experimental operators for onnxruntime
 ==================================================
 
-.. image:: https://travis-ci.org/sdpython/onnxortext.svg?branch=master
-    :target: https://travis-ci.org/sdpython/onnxortext
+.. image:: https://travis-ci.com/sdpython/onnxortext.svg?branch=master
+    :target: https://travis-ci.com/sdpython/onnxortext
     :alt: Build status
 
 .. image:: https://ci.appveyor.com/api/projects/status/r7st490hekggad3d?svg=true
@@ -50,7 +50,7 @@ onnxortext: experimental operators for onnxruntime
 `github <https://github.com/sdpython/onnxortext/>`_,
 `documentation <http://www.xavierdupre.fr/app/onnxortext/helpsphinx/index.html>`_,
 `wheel <http://www.xavierdupre.fr/site2013/index_code.html#onnxortext>`_,
-`travis <https://travis-ci.org/sdpython/onnxortext>`_,
+`travis <https://travis-ci.com/sdpython/onnxortext>`_,
 :ref:`l-README`,
 :ref:`blog <ap-main-0>`,
 :ref:`l-issues-todolist`
