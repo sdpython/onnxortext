@@ -23,10 +23,6 @@ onnxortext: experimental operators for onnxruntime
     :alt: MIT License
     :target: http://opensource.org/licenses/MIT
 
-.. image:: https://requires.io/github/sdpython/onnxortext/requirements.svg?branch=master
-     :target: https://requires.io/github/sdpython/onnxortext/requirements/?branch=master
-     :alt: Requirements Status
-
 .. image:: https://codecov.io/github/sdpython/onnxortext/coverage.svg?branch=master
     :target: https://codecov.io/github/sdpython/onnxortext?branch=master
 
