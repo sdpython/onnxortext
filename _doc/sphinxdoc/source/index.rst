@@ -2,7 +2,7 @@ onnxortext: experimental operators for onnxruntime
 ==================================================
 
 .. image:: https://travis-ci.com/sdpython/onnxortext.svg?branch=master
-    :target: https://travis-ci.com/sdpython/onnxortext
+    :target: https://app.travis-ci.com/github/sdpython/onnxortext
     :alt: Build status
 
 .. image:: https://ci.appveyor.com/api/projects/status/r7st490hekggad3d?svg=true
