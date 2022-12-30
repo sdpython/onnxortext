@@ -19,7 +19,7 @@ readme = 'README.rst'
 history = "HISTORY.rst"
 requirements = None
 
-KEYWORDS = project_var_name + ', ONNX, onnxruntime'
+KEYWORDS = [project_var_name, 'onnx', 'onnxruntime', 'extensions']
 DESCRIPTION = """Experimental runtime of ONNX operator based on onnxruntime."""
 CLASSIFIERS = [
     'Programming Language :: Python :: %d' % sys.version_info[0],
