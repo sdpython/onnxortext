@@ -37,5 +37,5 @@ onnxruntime-*-*-*/
 *.pyd
 onnxortext/*.dll
 onnxortext/*.so
-_doc/sphinxdoc/source/phdoc_static/reveal.js/*
-_doc/sphinxdoc/source/phdoc_static/require.js
+_doc/sphinxdoc/source/_static/reveal.js/*
+_doc/sphinxdoc/source/_static/require.js
